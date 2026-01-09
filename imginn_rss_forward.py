@@ -8,9 +8,13 @@ USERNAME = "forwardobservations2.0"  # change to any username
 OUTFILE = f"{USERNAME}_ig.rss"
 
 URL = f"https://imginn.com/{USERNAME}/"
+headers = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                  "AppleWebKit/537.36 (KHTML, like Gecko) "
+                  "Chrome/120.0.0.0 Safari/537.36"
+}
 
-# Fetch the HTML
-html = requests.get(URL, timeout=15).text
+html = requests.get(URL, headers=headers, timeout=15).text
 soup = BeautifulSoup(html, "html.parser")
 
 # Prepare RSS structure
