@@ -25,9 +25,6 @@ jobs:
       - name: Generate RSS feeds (imginn forward)
         run: python imginn_rss_forward.py
 
-      - name: Generate RSS feeds (imginn rob)
-        run: python imginn_rss_rob.py
-
       - name: Commit updated feeds
         run: |
           git config user.name "rss-bot"
