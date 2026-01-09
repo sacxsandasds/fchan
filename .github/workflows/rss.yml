@@ -1,5 +1,8 @@
 name: 4chan RSS
 
+permissions:
+  contents: write
+
 on:
   schedule:
     - cron: "*/45 * * * *"
