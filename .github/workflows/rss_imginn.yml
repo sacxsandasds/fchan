@@ -1,11 +1,11 @@
-name: Imginn RSS Feeds
+name: Imginn RSS
 
 permissions:
   contents: write
 
 on:
   schedule:
-    - cron: "0 0 * * *"   # every 8 hours (good for IG mirrors)
+    - cron: "0 0 * * *"  # daily at midnight UTC
   workflow_dispatch:
 
 jobs:
@@ -20,15 +20,17 @@ jobs:
           python-version: "3.x"
 
       - name: Install dependencies
-        run: pip install requests beautifulsoup4
+        run: |
+          pip install playwright beautifulsoup4 lxml
+          playwright install
 
-      - name: Generate RSS feeds (imginn forward)
-        run: python imginn_rss_forward.py
+      - name: Generate RSS feed
+        run: python3 imginn_rss_forward.py
 
-      - name: Commit updated feeds
+      - name: Commit updated feed
         run: |
           git config user.name "rss-bot"
           git config user.email "rss@bot"
           git add *.rss
-          git commit -m "update rss" || exit 0
+          git commit -m "update RSS feed" || exit 0
           git push
