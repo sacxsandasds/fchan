@@ -13,10 +13,16 @@ with sync_playwright() as p:
     browser = p.chromium.launch(headless=True)
     page = browser.new_page()
     page.goto(URL, timeout=30000)
-    page.wait_for_selector("a[href^='/p/']", timeout=10000)  # wait for posts to load
+    
+    # Wait for posts to appear
+    page.wait_for_function(
+        "() => document.querySelectorAll('a[href^=\"/p/\"]').length > 0",
+        timeout=15000
+    )
+    
     html = page.content()
     browser.close()
-
+    
 # --- Parse HTML ---
 soup = BeautifulSoup(html, "html.parser")
 
